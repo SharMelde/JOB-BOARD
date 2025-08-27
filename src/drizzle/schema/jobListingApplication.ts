@@ -1,8 +1,16 @@
-import { integer, primaryKey, pgTable, uuid, varchar, text, pgEnum } from "drizzle-orm/pg-core";
-import { relations } from "drizzle-orm";
-import { jobListingReferences, JobListingTable } from "./jobListing";
-import { UserTable } from "./user";
-import { createdAt, updatedAt } from "../schemaHelpers";
+import {
+  integer,
+  pgEnum,
+  pgTable,
+  primaryKey,
+  text,
+  uuid,
+  varchar,
+} from "drizzle-orm/pg-core"
+import { JobListingTable } from "./jobListing"
+import { UserTable } from "./user"
+import { createdAt, updatedAt } from "../schemaHelpers"
+import { relations } from "drizzle-orm"
 
 export const applicationStages = [
   "denied",
@@ -10,14 +18,12 @@ export const applicationStages = [
   "interested",
   "interviewed",
   "hired",
-] as const;
-
-export type ApplicationStage = (typeof applicationStages)[number];
-
+] as const
+export type ApplicationStage = (typeof applicationStages)[number]
 export const applicationStageEnum = pgEnum(
   "job_listing_applications_stage",
   applicationStages
-);
+)
 
 export const JobListingApplicationTable = pgTable(
   "job_listing_applications",
@@ -34,8 +40,8 @@ export const JobListingApplicationTable = pgTable(
     createdAt,
     updatedAt,
   },
-  (table) => [primaryKey({ columns: [table.jobListingId, table.userId] })]
-);
+  table => [primaryKey({ columns: [table.jobListingId, table.userId] })]
+)
 
 export const jobListingApplicationRelations = relations(
   JobListingApplicationTable,
@@ -49,5 +55,6 @@ export const jobListingApplicationRelations = relations(
       references: [UserTable.id],
     }),
   })
-);
+)
+
 
