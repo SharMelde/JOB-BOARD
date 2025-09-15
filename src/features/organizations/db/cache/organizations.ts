@@ -1,15 +1,15 @@
-import { getGlobalTag, getIdTag } from "@/lib/dataCache";
-import { revalidateTag } from "next/cache";
+import { getGlobalTag, getIdTag } from "@/lib/dataCache"
+import { revalidateTag } from "next/cache"
 
 export function getOrganizationGlobalTag() {
-    return getGlobalTag("Organization")
+  return getGlobalTag("organizations")
 }
 
 export function getOrganizationIdTag(id: string) {
-    return getIdTag("Organization", id)
+  return getIdTag("organizations", id)
 }
 
 export function revalidateOrganizationCache(id: string) {
-    revalidateTag(getOrganizationGlobalTag())
-    revalidateTag(getOrganizationIdTag(id))
+  revalidateTag(getOrganizationGlobalTag())
+  revalidateTag(getOrganizationIdTag(id))
 }
