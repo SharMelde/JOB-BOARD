@@ -11,7 +11,7 @@ const saveApplicantRatingTool = createTool({
     rating: z.number().int().max(5).min(1),
     jobListingId: z.string(),
     userId: z.string(),
-  }),
+  }) as z.ZodTypeAny,
   handler: async ({ jobListingId, rating, userId }) => {
     await updateJobListingApplication({ jobListingId, userId }, { rating })
 
