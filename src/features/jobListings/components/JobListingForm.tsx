@@ -35,9 +35,11 @@ import {
   formatLocationRequirement,
   formatWageInterval,
 } from "../lib/formatters"
+
 import { MarkdownEditor } from "@/components/markdown/MarkdownEditor"
 import { Button } from "@/components/ui/button"
 import { LoadingSwap } from "@/components/LoadingSwap"
+import { Loader2Icon } from "lucide-react"
 import { createJobListing, updateJobListing } from "../actions/actions"
 import { toast } from "sonner"
 import { StateSelectItems } from "./stateSelectItems"
@@ -47,7 +49,7 @@ const NONE_SELECT_VALUE = "none"
 export function JobListingForm({
   jobListing,
 }: {
-  jobListing: Pick<
+  jobListing?: Pick<
     typeof JobListingTable.$inferSelect,
     | "title"
     | "description"
@@ -60,7 +62,7 @@ export function JobListingForm({
     | "city"
     | "locationRequirement"
   >
-}) {
+})  {
   const form = useForm({
     resolver: zodResolver(jobListingSchema),
     defaultValues: jobListing ?? {

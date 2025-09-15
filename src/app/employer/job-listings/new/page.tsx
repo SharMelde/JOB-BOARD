@@ -1,7 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { JobListingForm } from "@/features/jobListings/components/JobListingForm"
 
-
 export default function NewJobListingPage() {
   return (
     <div className="max-w-5xl mx-auto p-4">
