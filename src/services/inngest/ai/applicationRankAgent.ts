@@ -1,17 +1,19 @@
 import { env } from "@/data/env/server"
 import { updateJobListingApplication } from "@/features/jobListingApplications/db/jobListingsApplication"
 import { createAgent, createTool, gemini } from "@inngest/agent-kit"
-import { z } from "zod"
+import { z, ZodType } from "zod"
+
+const applicantRatingSchema: ZodType<any> = z.object({
+  rating: z.number().int().max(5).min(1),
+  jobListingId: z.string(),
+  userId: z.string(),
+})
 
 const saveApplicantRatingTool = createTool({
   name: "save-applicant-ranking",
   description:
     "Saves the applicant's ranking for a specific job listing in the database",
-  parameters: z.object({
-    rating: z.number().int().max(5).min(1),
-    jobListingId: z.string(),
-    userId: z.string(),
-  }),
+  parameters: applicantRatingSchema, // ✅ Type-safe
   handler: async ({ jobListingId, rating, userId }) => {
     await updateJobListingApplication({ jobListingId, userId }, { rating })
 
