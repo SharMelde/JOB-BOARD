@@ -7,14 +7,15 @@ const saveApplicantRatingTool = createTool({
   name: "save-applicant-ranking",
   description:
     "Saves the applicant's ranking for a specific job listing in the database",
-  parameters: z.object({
-    rating: z.number().int().min(1).max(5),
-    jobListingId: z.string(),
-    userId: z.string(),
-  }),
+  parameters: z
+    .object({
+      rating: z.number().int().min(1).max(5),
+      jobListingId: z.string(),
+      userId: z.string(),
+    })
+    .strict() as z.ZodTypeAny,
   handler: async ({ jobListingId, rating, userId }) => {
     await updateJobListingApplication({ jobListingId, userId }, { rating })
-
     return "Successfully saved applicant ranking score."
   },
 })
