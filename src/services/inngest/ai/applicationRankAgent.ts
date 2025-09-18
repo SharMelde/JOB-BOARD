@@ -7,11 +7,12 @@ const saveApplicantRatingTool = createTool({
   name: "save-applicant-ranking",
   description:
     "Saves the applicant's ranking for a specific job listing in the database",
+  // Fix: no casting needed, use ZodTypeAny directly
   parameters: z.object({
-    rating: z.number().int().max(5).min(1),
+    rating: z.number().int().min(1).max(5),
     jobListingId: z.string(),
     userId: z.string(),
-  }) as z.ZodTypeAny,
+  }),
   handler: async ({ jobListingId, rating, userId }) => {
     await updateJobListingApplication({ jobListingId, userId }, { rating })
 
